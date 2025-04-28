@@ -13,6 +13,7 @@ struct VIn
     uint4 boneIndex : BONE0;
     float4 boneWeight : WEIGHT0;
     float2 uv : TEXCOORD0;
+    
 };
 
 struct VOut
@@ -55,8 +56,20 @@ float4 PS(VOut pIn) : SV_TARGET
      float d = dot(n, c_lightDir);
      d = 0.5f * d + 0.5f;
      d = d * d;
+    if (d > 0.6)
+    {
+        d = 0.8f;
+    }
+    else if (d > 0.3)
+    {
+        d = 0.5f;
+    }
+    else
+    {
+        d = 0.2f;
+    }
 
-     float4 light = float4(d * c_lightColor, 1.0f);
+        float4 light = float4(d * c_lightColor, 1.0f);
 
      return diffuseTex * light;
 }
